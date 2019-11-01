@@ -1,7 +1,7 @@
 # PlantWatch
 Keeping plants alive since 2019
 
-![last-commit](https://img.shields.io/github/last-commit/nmeurer/plantwatch?color=%23008800) ![downloads](https://img.shields.io/github/downloads/nmeurer/plantwatch/total?color=%23008800)
+![last-commit](https://img.shields.io/github/last-commit/nmeurer/plantwatch?color=%23008800&style=for-the-badge)
 ![ms-paint](https://forthebadge.com/images/badges/designed-in-ms-paint.svg)
 
 ## What's PlantWatch?
