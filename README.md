@@ -1,5 +1,6 @@
 # PlantWatch
 Keeping plants alive since 2019
+
 ![last-commit](https://img.shields.io/github/last-commit/nmeurer/plantwatch?color=%23008800)
 
 ## What's PlantWatch?
