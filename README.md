@@ -13,6 +13,10 @@ By adding various sensors to your plant and it's surroundings you can keep track
 
 <img src="https://raw.githubusercontent.com/nmeurer/PlantWatch/master/media/screenshot_mobile.jpg" width="300">
 
+## Getting started
+There is a small setup guide in the [wiki](https://github.com/nmeurer/PlantWatch/wiki/Setup-guide).
+We'll add more information as the project goes on!
+
 ## Roadmap
 - Add support for BMP280 + BME280
 - Add support for analog multiplexer
