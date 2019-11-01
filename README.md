@@ -1,3 +1,4 @@
+![plantwatch-logo](https://raw.githubusercontent.com/nmeurer/PlantWatch/master/media/plantwatch_logo_complete.png)
 # PlantWatch
 Keeping plants alive since 2019
 
