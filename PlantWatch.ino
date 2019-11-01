@@ -134,7 +134,7 @@ void loop()
             client.println("          <div class='page-header'>");
             client.println("            <h1>");
             client.println("              <large><b>PlantWatch</b></large><br>");
-            client.println("              <small>Pflanze: "+String(plantName)+ ", <i>"+String(plantType)+"</i></small>");
+            client.println("              <small>Plant: "+String(plantName)+ ", <i>"+String(plantType)+"</i></small>");
             client.println("            </h1>");
             client.println("          </div>");
             client.println("          <div class='progress'>");
