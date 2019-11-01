@@ -23,4 +23,8 @@ By adding various sensors to your plant and it's surroundings you can keep track
 ## Contributing
 Feel free to contribute in any way! Together we can make a better future and grow happier plants!
 
+## License
+This work is released under the GNU General Public License v3.0
+Read more about the license [here](https://github.com/nmeurer/PlantWatch/blob/master/LICENSE).
+
 #### This project is work in progress and by no means bug free ;)
