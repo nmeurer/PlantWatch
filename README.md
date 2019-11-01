@@ -1,9 +1,10 @@
 # PlantWatch
 Keeping plants alive since 2019
 
-![last-commit](https://img.shields.io/github/last-commit/nmeurer/plantwatch?color=%23008800&style=for-the-badge)
 ![ms-paint](https://forthebadge.com/images/badges/designed-in-ms-paint.svg)
 ![gluten-free](https://forthebadge.com/images/badges/gluten-free.svg)
+![fuck-it](https://forthebadge.com/images/badges/fuck-it-ship-it.svg)
+![last-commit](https://img.shields.io/github/last-commit/nmeurer/plantwatch?color=%23008800&style=for-the-badge)
 
 ## What's PlantWatch?
 PlantWatch is an open-source firmware for esp8266 which helps you monitoring the plants you love.
