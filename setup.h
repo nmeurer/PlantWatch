@@ -10,8 +10,8 @@
 */
 
 /*### Plant-related stuff #################################################################################################*/
-#define plantName "Karsten" //name of your plant to be displayed
-#define plantType "Grünlilie" //species of your plant
+#define plantName "living room plant" //name of your plant to be displayed
+#define plantType "Chlorophytum comosum" //species of your plant
 /*#########################################################################################################################*/
 
 /*### Electronics setup ###################################################################################################*/
@@ -23,8 +23,8 @@
 /*#########################################################################################################################*/
 
 /*### WiFi setup ##########################################################################################################*/
-const char* ssid     = "MeuTekk"; // Replace with your networks SSID
-const char* password = "0105166146172279"; // Replace with your networks password
+const char* ssid     = "YOUR_SSID"; // Replace with your networks SSID
+const char* password = "YOUR_PASSWORD"; // Replace with your networks password
 
 WiFiServer server(80); // Set web server port. (Port 80 recommended)
 
