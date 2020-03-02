@@ -9,9 +9,9 @@
 
 */
 
-#include <ESP8266mDNS.h>
-#include <ESP8266WiFi.h>
-#include "DHTesp.h"
+#include <ESPmDNS.h>
+#include <WiFi.h>
+#include <DHT.h>
 #include "setup.h"
 
 String header; // Variable to store the HTTP request
@@ -19,25 +19,18 @@ unsigned long currentTime = millis(); // Current time
 unsigned long previousTime = 0; // Previous time
 const long timeoutTime = 2000; // Define timeout time in milliseconds (example: 2000ms = 2s)
 
-DHTesp dht;
+DHT dht(DHTpin, DHTtype);
 
 void setup()
 {
   Serial.begin(115200);
 
-  dht.setup(DHTpin, DHTesp::DHTtype); //initialize DHT-sensor
+  dht.begin(); //initialize DHT-sensor
 
   //WiFi-Setup
 
-  MDNS.begin("plantwatch");
   Serial.print("Connecting to ");
   Serial.println(ssid);
-  
-  if (useCustomServerName == false){ //handling custom server name
-    WiFi.hostname("PlantWatch: "+String(plantName));
-  } else if (useCustomServerName == true){
-    WiFi.hostname(String(customServerName));
-  }
   
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
@@ -45,7 +38,16 @@ void setup()
     Serial.print(".");
   }
 
+  // Add custom server name and MDNS
+   /*if (useCustomServerName == false){ //handling custom server name
+    WiFi.setHostname("PlantWatch: "+plantName);
+  } else if (useCustomServerName == true){
+    WiFi.setHostname(String(customServerName));
+  }*/
+  MDNS.begin("plantwatch");
+  
   // Print local IP address and start web server
+  
   Serial.println("");
   Serial.println("WiFi connected.");
   Serial.println("IP address: ");
@@ -60,8 +62,8 @@ void loop()
   
   delay(2000);
 
-  float humidity = dht.getHumidity();
-  float temperature = dht.getTemperature();
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
   float moisture = analogRead(moistPin);
 
   int moisturePercentage = map(moisture, minMoist, maxMoist, 0.0, 100.0); //turn the ugly raw value into a nice percentage
