@@ -20,7 +20,6 @@ We'll add more information as the project goes on!
 ## Roadmap
 - Ditch the ESP8266 and use a ESP32 DONE
 - Add support for BMP280 + BME280
-- Add support for analog multiplexer
 - Add support for light sensor
 - Add MQTT support / smart home integration
 - Create a neat case to fit everything inside
