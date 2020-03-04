@@ -16,15 +16,15 @@
 
 /*### Electronics setup ###################################################################################################*/
 #define DHTtype DHT11 //set the type of your DHT here
-#define DHTpin 14 //the data pin from your DHT-sensor
+#define DHTpin 26 //the data pin from your DHT-sensor
 #define moistPin A0 //moisture sensor pin
 #define maxMoist 650 //raw value after watering
 #define minMoist 1023 //raw value when soil is dry
 /*#########################################################################################################################*/
 
 /*### WiFi setup ##########################################################################################################*/
-const char* ssid     = "YOUR_SSID"; // Replace with your networks SSID
-const char* password = "YOUR_PASSWORD"; // Replace with your networks password
+const char* ssid     = "MeuTekk"; // Replace with your networks SSID
+const char* password = "0105166146172279"; // Replace with your networks password
 
 WiFiServer server(80); // Set web server port. (Port 80 recommended)
 
