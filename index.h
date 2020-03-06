@@ -29,10 +29,12 @@ String getIndex(){
          web += "              <small>Plant: "+String(plantName)+ ", <i>"+String(plantType)+"</i></small>";
          web += "            </h1>";
          web += "          </div>";
+       #if (useMoisture)
          web += "          <div class='progress'>";
          web += "            <div class='progress-bar progress-bar-striped progress-bar-animated' style='width: "+String(moisturePercentage)+"%;'>";
          web += "            </div>";
          web += "          </div>";
+       #endif
          web += "          <table class='table'>";
          web += "            <thead>";
          web += "              <tr>";
@@ -44,6 +46,7 @@ String getIndex(){
          web += "                </th>";
          web += "              </tr>";
          web += "            </thead>";
+       #if (useMoisture)
          web += "            <tbody>";
          web += "              <tr class='table-"+moisturePercentageLevel+"'>";
          web += "                <td>";
@@ -54,6 +57,8 @@ String getIndex(){
          web += "                </td>";
          web += "              </tr>";
          web += "            </tbody>";
+       #endif
+       #if (useDHT)
          web += "            <tbody>";
          web += "              <tr class='table-"+humidityLevel+"'>";
          web += "                <td>";
@@ -74,6 +79,19 @@ String getIndex(){
          web += "                </td>";
          web += "              </tr>";
          web += "            </tbody>";
+       #endif
+       #if (useBrightness)
+         web += "            <tbody>";
+         web += "              <tr class='table-"+brightnessPercentageLevel+"'>";
+         web += "                <td>"; 
+         web += "                  Brightness";
+         web += "                </td>";
+         web += "                <td>";
+         web += "                  "+String(brightnessPercentage)+"%";
+         web += "                </td>";
+         web += "              </tr>";
+         web += "            </tbody>";
+       #endif
          web += "          </table>";
          web += "         <h6>My IP-adress: "+ WiFi.localIP().toString() +"</h6>";
          web += "        </div>";

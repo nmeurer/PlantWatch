@@ -8,51 +8,49 @@
  http://github.com/nmeurer/PlantWatch/       MAIN-CODE                                                   
 
 */
-
-#include <ESPmDNS.h>
 #include <WiFi.h>
-#include <DHT.h>
-#include "setup.h"
 
 String header; // Variable to store the HTTP request
 unsigned long currentTime = millis(); // Current time
 unsigned long previousTime = 0; // Previous time
 const long timeoutTime = 2000; // Define timeout time in milliseconds (example: 2000ms = 2s)
-float moisture, humidity, temperature;
-int moisturePercentage;
-String humidityLevel, temperatureLevel, moisturePercentageLevel;
+float moisture, humidity, temperature, brightness;
+int moisturePercentage, brightnessPercentage;
+String humidityLevel, temperatureLevel, moisturePercentageLevel, brightnessPercentageLevel, brightnessLevel;
 
+#include "setup.h"
 #include "index.h"
 
-DHT dht(DHTpin, DHTtype);
+#if (useDHT)
+  #include <DHT.h>
+  DHT dht(DHTpin, DHTtype);
+#endif
+
+#if (useMDNS)
+  #include <ESPmDNS.h>
+#endif
 
 void setup()
 {
   Serial.begin(115200);
 
-  dht.begin(); //initialize DHT-sensor
-
+  #if (useDHT)
+    dht.begin(); //initialize DHT-sensor
+  #endif
+  
   //WiFi-Setup
-
   Serial.print("Connecting to ");
   Serial.println(ssid);
-  
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
 
-  // Add custom server name and MDNS
- /*  if (useCustomServerName == false){ //handling custom server name
-    WiFi.setHostname("PlantWatch: "+plantName.toString());
-  } else if (useCustomServerName == true){
-    WiFi.setHostname(customServerName.toString());
-  }*/
-  MDNS.begin("plantwatch");
-  
+  #if (useMDNS) // Add custom MDNS
+  MDNS.begin(mdnsname);
+  #endif
   // Print local IP address and start web server
-  
   Serial.println("");
   Serial.println("WiFi connected.");
   Serial.println("IP address: ");
@@ -62,50 +60,72 @@ void setup()
 
 void loop()
 {
-
-  //reading the sensors. Dont remove the delay, since the DHT is rather slow
-  
-  delay(2000);
-
-  humidity = dht.readHumidity();
-  temperature = dht.readTemperature();
-  moisture = analogRead(moistPin);
-
-  moisturePercentage = map(moisture, minMoist, maxMoist, 0.0, 100.0); //turn the ugly raw value into a nice percentage
-  
   Serial.println();
-  Serial.print(humidity, 1);
-  Serial.print("\t");
-  Serial.print(temperature, 1);
-  Serial.print("\t");
+  
+  #if (useDHT)
+    delay(2000); //dont remove the delay, since the DHT is rather slow
+    humidity = dht.readHumidity();
+    temperature = dht.readTemperature();
+    Serial.print(humidity, 1);
+    Serial.print("\t");
+    Serial.print(temperature, 1);
+    Serial.print("\t");
+  #endif
+
+  #if (useMoisture)
+  moisture = analogRead(moistPin);
+  moisturePercentage = map(moisture, minMoist, maxMoist, 0.0, 100.0); //turn the ugly raw value into a nice percentage
   Serial.print(moisture, 1);
   Serial.print("\t");
   Serial.print(moisturePercentage, 1);
+  Serial.print("\t");
+  #endif
 
-  if (humidity < 45 && humidity > 40){ //handling the background for humidity
-    humidityLevel = "warning";
-  } else if (humidity < 40) {
-    humidityLevel = "danger";
-  } else {
-    humidityLevel = "success";
-  }
+  #if (useBrightness)
+  brightness = analogRead(brightPin);
+  brightnessPercentage = map(brightness, minBright, maxBright, 0.0, 100.0); //turn the ugly raw value into a nice percentage
+  Serial.print(brightnessPercentage, 1);
+  Serial.print("\t");
+  #endif
 
-  if (temperature > 25 && temperature < 30){ //handling the background for temperature
-    temperatureLevel = "warning";
-  } else if (temperature > 30) {
-    temperatureLevel = "danger";
-  } else {
-    temperatureLevel = "success";
-  }
+  #if (useDHT)
+    if (humidity < 45 && humidity > 40){ //handling the background for humidity
+      humidityLevel = "warning";
+    } else if (humidity < 40) {
+      humidityLevel = "danger";
+    } else {
+      humidityLevel = "success";
+    }
 
-  if (moisturePercentage < 30 && moisturePercentage > 15){ //handling the background for soil moisture
-    moisturePercentageLevel = "warning";
-  } else if (moisturePercentage < 15) {
-    moisturePercentageLevel = "danger";
-  } else {
-    moisturePercentageLevel = "success";
-  }
+    if (temperature > 25 && temperature < 30){ //handling the background for temperature
+      temperatureLevel = "warning";
+    } else if (temperature > 30) {
+      temperatureLevel = "danger";
+    } else {
+      temperatureLevel = "success";
+    }
+  #endif
 
+  #if (useMoisture)
+    if (moisturePercentage < 30 && moisturePercentage > 15){ //handling the background for soil moisture
+      moisturePercentageLevel = "warning";
+    } else if (moisturePercentage < 15) {
+      moisturePercentageLevel = "danger";
+    } else {
+      moisturePercentageLevel = "success";
+    }
+  #endif
+
+  #if (useBrightness)
+    if (brightnessPercentage < 45 && brightnessPercentage > 30){ //handling the background for soil moisture
+      brightnessPercentageLevel = "warning";
+    } else if (brightnessPercentage < 30) {
+      brightnessPercentageLevel = "danger";
+    } else {
+      brightnessPercentageLevel = "success";
+    }
+  #endif
+  
   WiFiClient client = server.available();   // Listen for incoming clients
 
   if (client) {                             // If a new client connects,
@@ -120,11 +140,7 @@ void loop()
         Serial.write(c);                    // print it out the serial monitor
         header += c;
         if (c == '\n') {                    // if the byte is a newline character
-          // if the current line is blank, you got two newline characters in a row.
-          // that's the end of the client HTTP request, so send a response:
           if (currentLine.length() == 0) {
-            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-            // and a content-type so the client knows what's coming, then a blank line:
             client.println("HTTP/1.1 200 OK");
             client.println("Content-type:text/html");
             client.println("Connection: close");
