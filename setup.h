@@ -37,8 +37,8 @@
 /*#########################################################################################################################*/
 
 /*### WiFi setup ##########################################################################################################*/
-const char* ssid     = "MeuTekk"; // Replace with your networks SSID
-const char* password = "0105166146172279"; // Replace with your networks password
+const char* ssid     = "yourSSID"; // Replace with your networks SSID
+const char* password = "yourPassword"; // Replace with your networks password
 
 WiFiServer server(80); // Set web server port. (Port 80 recommended)
 
