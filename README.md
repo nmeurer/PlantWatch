@@ -29,7 +29,6 @@ Feel free to contribute in any way! Together we can make a better future and gro
 
 ## License
 Released under the MIT license 2020 by Noah Meurer
-http://nmeurer.de
 Read more about the license [here](https://github.com/nmeurer/PlantWatch/blob/master/LICENSE).
 
 #### This project is work in progress and by no means bug free ;)
